@@ -1,0 +1,17 @@
+# JetBrains
+.idea/
+*.iml
+
+# VSCode
+.vscode/
+
+# macOS
+.DS_Store
+
+# Editor swap/temp files
+*.swp
+*.swo
+*~
+
+# Windows
+Thumbs.db

@@ -1,0 +1,22 @@
+# Per-machine local overrides (sourced by shared.sh / zshrc / bashrc)
+*.local
+
+# Secrets and credentials
+.env
+.env.*
+*.pem
+*.key
+*.p12
+*.pfx
+id_rsa*
+id_ed25519*
+id_ecdsa*
+id_dsa*
+known_hosts
+authorized_keys
+
+# OS / editor cruft
+.DS_Store
+*.swp
+*.swo
+*~

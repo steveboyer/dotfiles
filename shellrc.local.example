@@ -1,0 +1,17 @@
+# ~/.shellrc.local
+# Per-machine shell config. NOT committed to the dotfiles repo.
+# Sourced last by shell/shared.sh, so it can override anything above it.
+#
+# To use: copy this file to ~/.shellrc.local, then edit.
+
+# Examples:
+
+# Work env vars
+# export AWS_PROFILE="work"
+# export GITHUB_TOKEN="..."
+
+# Machine-specific aliases
+# alias work-vpn='sudo openconnect vpn.example.com'
+
+# Extra PATH entries (prepend_path is defined in shared.sh)
+# prepend_path "$HOME/work-tools/bin"

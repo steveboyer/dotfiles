@@ -1,0 +1,27 @@
+# Single-line prompt: keep the prompt character on the same line as the
+# directory and branch info, instead of starship's default two-line format.
+[line_break]
+disabled = true
+
+# Add a leading space before ❯ so it doesn't butt up against the previous
+# module. Colors match the colorblind-friendly palette used in gitconfig:
+# bright-yellow for "good" (success), bright-blue for "bad" (error).
+[character]
+success_symbol = "[ ❯](bold bright-yellow)"
+error_symbol = "[ ❯](bold bright-blue)"
+
+# Language modules I don't want surfaced in the prompt.
+[terraform]
+disabled = true
+
+[typst]
+disabled = true
+
+[java]
+disabled = true
+
+[swift]
+disabled = true
+
+[python]
+disabled = true

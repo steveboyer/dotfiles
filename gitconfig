@@ -1,0 +1,43 @@
+[pull]
+	rebase = true
+[core]
+	excludesfile = ~/.gitignore_global
+	hooksPath = ~/.git/hooks
+	pager = delta
+[init]
+	defaultBranch = main
+[interactive]
+	diffFilter = delta --color-only
+[merge]
+	conflictstyle = diff3
+[diff]
+	colorMoved = default
+
+# Colorblind-friendly palette: blue (removed) + yellow (added) instead of
+# the default red + green. Applied consistently across diff, status,
+# branch, and decorate output.
+
+[delta]
+	navigate = true
+	light = false
+	line-numbers = true
+	minus-style = brightblue
+	minus-emph-style = brightblue bold
+	plus-style = brightyellow
+	plus-emph-style = brightyellow bold
+[color "diff"]
+	old = brightblue
+	new = brightyellow
+[color "status"]
+	added = brightyellow
+	changed = brightblue
+	untracked = brightblue
+[color "branch"]
+	current = brightyellow
+	remote = brightblue
+[color "decorate"]
+	branch = brightyellow
+	remoteBranch = brightblue
+
+[include]
+	path = ~/.gitconfig.local
