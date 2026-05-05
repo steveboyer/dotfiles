@@ -1,0 +1,64 @@
+{
+  "statusLine": {
+    "type": "command",
+    "command": "~/.claude/statusline-command.sh"
+  },
+  "permissions": {
+    "allow": [
+      "Bash(git status:*)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git branch:*)",
+      "Bash(git checkout:*)",
+      "Bash(git switch:*)",
+      "Bash(git fetch:*)",
+      "Bash(git pull:*)",
+      "Bash(git stash:*)",
+      "Bash(npm test:*)",
+      "Bash(npm run:*)",
+      "Bash(npx xcodebuildmcp:*)",
+      "Bash(swift build:*)",
+      "Bash(swift test:*)",
+      "Bash(swift run:*)",
+      "Bash(swift scripts/*)",
+      "Bash(mkdir:*)",
+      "Bash(touch:*)",
+      "Bash(mv:*)",
+      "Bash(cp:*)",
+      "Bash(open:*)",
+      "Bash(rm -rf /tmp)",
+      "Bash(rm -rf /tmp/**)"
+    ],
+    "deny": [
+      "Bash(rm -rf /)",
+      "Bash(rm -rf /**)",
+      "Bash(rm -rf ~)",
+      "Bash(rm -rf ~/**)",
+      "Bash(rm -rf $HOME)",
+      "Bash(rm -rf $HOME/**)"
+    ],
+    "ask": [
+      "Bash(rm:*)",
+      "Bash(rmdir:*)",
+      "Bash(git push:*)",
+      "Bash(git reset:*)",
+      "Bash(git rebase:*)",
+      "Bash(git clean:*)",
+      "Bash(git checkout -- *)",
+      "Bash(git branch -D *)",
+      "Bash(curl:*)",
+      "Bash(wget:*)",
+      "Bash(brew:*)",
+      "Bash(npm install:*)",
+      "Bash(npm uninstall:*)",
+      "Bash(pip install:*)",
+      "Bash(pod install:*)"
+    ],
+    "defaultMode": "default"
+  },
+  "enabledPlugins": {
+    "swift-lsp@claude-plugins-official": true
+  }
+}

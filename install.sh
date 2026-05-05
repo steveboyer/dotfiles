@@ -36,8 +36,10 @@ LINKS=(
   "gitconfig        $HOME/.gitconfig"
   "gitignore_global $HOME/.gitignore_global"
   "starship.toml    $HOME/.config/starship.toml"
-  "claude/CLAUDE.md $HOME/.claude/CLAUDE.md"
-  "claude/skills    $HOME/.claude/skills"
+  "claude/CLAUDE.md             $HOME/.claude/CLAUDE.md"
+  "claude/settings.json         $HOME/.claude/settings.json"
+  "claude/statusline-command.sh $HOME/.claude/statusline-command.sh"
+  "claude/skills                $HOME/.claude/skills"
   "bin              $HOME/bin"
 )
 
