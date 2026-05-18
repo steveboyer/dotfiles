@@ -109,6 +109,8 @@ alias gls='git ls-files'
 # Maven
 alias mcv='mvn clean verify'
 
+alias h='history'
+
 # Mac-only
 if [ "$PLATFORM" = "mac" ]; then
   alias python='python3'

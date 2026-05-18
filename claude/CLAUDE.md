@@ -8,6 +8,25 @@
 - Prefer concise explanations
 - Always use absolute paths in scripts
 - Use zsh syntax for shell scripts
+- If ~/.claude/settings.json denies your ability to run a command, DO NOT try another command to work around it 
+
+## Java
+- Prefer Java 21 (LTS) unless the project explicitly requires another version.
+- Keep package names lowercase and avoid the default package.
+- Prefer clear, small methods and immutable data where practical.
+- Add or update automated tests for behavior changes (prefer JUnit 5 conventions).
+- Do not swallow exceptions; either handle them with context or propagate them.
+- Maven projects
+  - Run `mvn spotless:apply` after making any code changes
+
+## Python
+- Prefer Python 3.12+ unless the project specifies another version.
+- Prefer `uv` for Python environment and dependency management (`uv venv`, `uv sync`, `uv run ...`) unless the project already standardizes on another tool.
+- Use a project-local virtual environment (`.venv`) instead of the system interpreter.
+- Use absolute imports within packages and keep module names lowercase with underscores.
+- Add or update automated tests for behavior changes (prefer `pytest` conventions).
+- Prefer type hints for public functions and return values.
+- Raise specific exceptions with clear messages; avoid bare `except:` blocks.
 
 ## Git
 Never add "Co-Authored-By" lines to commit messages.
