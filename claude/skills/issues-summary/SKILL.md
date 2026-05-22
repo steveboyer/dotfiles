@@ -45,7 +45,9 @@ If nothing stands out, omit this section entirely.
 
 ## How to do it
 
-1. Read `issues.md`.
+1. Always re-read `issues.md` fresh, even if it was already read earlier in
+   the conversation. The file may have changed since the last read, and a
+   stale summary defeats the point. Never reuse a prior parse.
 2. Parse the next-free pointer from the header line (`currently **MS###** is next`).
 3. Walk each `- [ ]` and `- [x]` bullet, capturing the ID and the first
    sentence of the description (up to the first period or line break).

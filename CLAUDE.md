@@ -49,3 +49,4 @@ Each subdirectory of `claude/skills/` is a standalone Claude Code skill with its
 - New aliases/env vars go in `shared.sh` if they're cross-platform, gated under `if [ "$PLATFORM" = "mac" ]` (or `linux`) blocks if not.
 - Don't hardcode versioned paths. The Maven block is the pattern: glob for `apache-maven-*` and pick the first match.
 - The tracked `gitconfig` has no `[user]` block. Identity lives in `~/.gitconfig.local` only.
+- This is a PUBLIC repo in github. Make absolutely sure that nothing sensitive is here.
