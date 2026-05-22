@@ -37,8 +37,11 @@ The `LINKS` array is the source of truth for what gets symlinked. To add a new m
 Everything Claude-related lives here. `install.sh` symlinks:
 - `claude/CLAUDE.md` to `~/.claude/CLAUDE.md` (global Claude Code instructions)
 - `claude/skills/` to `~/.claude/skills/` (whole directory)
+- `claude/hooks/` to `~/.claude/hooks/` (whole directory)
 
 Each subdirectory of `claude/skills/` is a standalone Claude Code skill with its own `SKILL.md`. The frontmatter `description` is load-bearing: it's what determines when Claude Code auto-loads the skill. New skills require frontmatter with at minimum `name` and `description`.
+
+`claude/hooks/` holds Claude Code hook scripts wired up by `claude/settings.json` (which references them as `~/.claude/hooks/...`). The shell hooks are POSIX `sh` (`#!/bin/sh`, no `[[ ]]` or zsh/bash builtins) so they run anywhere. They are invoked directly as commands, so they must keep the executable bit in the git index (`git update-index --chmod=+x <file>`).
 
 ## Conventions when editing
 

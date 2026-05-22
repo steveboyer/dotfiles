@@ -40,6 +40,7 @@ LINKS=(
   "claude/settings.json         $HOME/.claude/settings.json"
   "claude/statusline-command.sh $HOME/.claude/statusline-command.sh"
   "claude/skills                $HOME/.claude/skills"
+  "claude/hooks                 $HOME/.claude/hooks"
   "bin              $HOME/bin"
 )
 

@@ -61,5 +61,22 @@
   "enabledPlugins": {
     "swift-lsp@claude-plugins-official": true
   },
-  "skipAutoPermissionPrompt": true
+  "skipAutoPermissionPrompt": true,
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write|Bash",
+        "hooks": [
+          { "type": "command", "command": "~/.claude/hooks/log-tool-use.sh", "timeout": 10 }
+        ]
+      }
+    ],
+    "SessionEnd": [
+      {
+        "hooks": [
+          { "type": "command", "command": "~/.claude/hooks/render-session-end.sh", "timeout": 30 }
+        ]
+      }
+    ]
+  }
 }
