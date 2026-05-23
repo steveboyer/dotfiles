@@ -15,6 +15,13 @@ id_dsa*
 known_hosts
 authorized_keys
 
+# Local Claude Code settings (machine-specific)
+.claude/
+
+# IDE
+.idea/
+*.iml
+
 # OS / editor cruft
 .DS_Store
 *.swp
