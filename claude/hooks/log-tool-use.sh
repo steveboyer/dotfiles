@@ -1,10 +1,13 @@
 #!/bin/sh
 # log-tool-use.sh
 # Claude Code PostToolUse hook. Appends one JSONL line per tool call to
-# ~/ClaudeLogs/<session_id>.jsonl using the real system clock.
+# ~/ClaudeLogs/<session_id>.jsonl, then re-renders the sibling .html
+# view so it stays current as the session runs (instead of only at
+# SessionEnd, which doesn't fire on crashes or force-quits).
 #
 # Install: ~/.claude/hooks/log-tool-use.sh   (chmod +x)
-# Requires: jq   (brew install jq)
+# Requires: jq        (brew install jq)
+#           python3   (stdlib only, used by render-log.py)
 #
 # Designed to be invisible and never block a session: any failure exits 0.
 # POSIX sh only: no [[ ]], no zsh/bash builtins.
@@ -38,5 +41,12 @@ printf '%s\n' "$input" | jq -c --arg ts "$ts" '{
   input:  (.tool_input  | tostring | .[0:800]),
   result: ((.tool_response // .tool_output // "") | tostring | .[0:400])
 }' >> "$logfile" 2>/dev/null
+
+# Re-render the sibling HTML view so it tracks the JSONL in near-real-time.
+# render-log.py is stdlib-only, so it runs without a venv. Errors swallowed
+# so a render failure can never block the session.
+if command -v python3 >/dev/null 2>&1; then
+  python3 "$HOME/.claude/hooks/render-log.py" "$logfile" >/dev/null 2>&1 || true
+fi
 
 exit 0
