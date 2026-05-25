@@ -25,7 +25,9 @@
       "Bash(cp:*)",
       "Bash(open:*)",
       "Bash(rm -rf /tmp)",
-      "Bash(rm -rf /tmp/**)"
+      "Bash(rm -rf /tmp/**)",
+      "Bash(xcodebuild:*)",
+      "mcp__XcodeBuildMCP__*"
     ],
     "deny": [
       "Bash(rm -rf /)",
