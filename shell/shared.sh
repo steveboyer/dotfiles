@@ -93,6 +93,12 @@ alias v='nvim'
 alias nv='nvim'
 alias vim='nvim'
 
+# Formatting
+# md files
+alias mdf='npx prettier --prose-wrap always --print-width 120 --write *.md'
+# python files
+alias pyf='ruff format *.py **/*.py'
+
 # Listing
 alias ll='ls -l'
 
