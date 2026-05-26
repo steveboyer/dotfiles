@@ -37,3 +37,14 @@ XcodeBuildMCP device tools (build_device, build_run_device, test_device,
 install_app_device, launch_app_device, list_devices, start_device_log_cap,
 etc.) rather than the *_sim variants. Only fall back to a simulator if I
 explicitly ask for it or no paired device is available.
+
+**A code change is NOT done until the new build is installed AND launched
+on the device.** A successful `build_device` only produces a binary on the
+host — the device keeps running the previously installed app, so my manual
+testing will appear to show the change didn't work. Default sequence for
+any iOS / watchOS change: `build_device` → `install_app_device` →
+`launch_app_device`, or use `build_run_device` which does all three in one
+step. This applies even when "just verifying it compiles" if there is any
+chance I will check behavior on-device after the turn. Only skip
+install/launch if I explicitly say compile-check only, or the change is
+purely tooling / docs / SPM-only that the device never runs.
