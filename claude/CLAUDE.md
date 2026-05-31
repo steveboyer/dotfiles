@@ -8,7 +8,16 @@
 - Prefer concise explanations
 - Always use absolute paths in scripts
 - Use zsh syntax for shell scripts
-- If ~/.claude/settings.json denies your ability to run a command, DO NOT try another command to work around it 
+- If ~/.claude/settings.json denies your ability to run a command, DO NOT try another command to work around it
+
+## Shell hygiene
+- Do NOT use `cd` or `git -C <path>` when you are already in the right
+  directory. The session starts at the project's primary working directory
+  — stay there and run plain commands.
+- Avoid chained `cd X && <cmd>` for one-off tool runs (e.g. `swift test`,
+  `mvn test`). The shell drifts and later commands break. Use the tool's
+  own path flag (`swift test --package-path X`, `mvn -f X/pom.xml`, etc.)
+  or run the command from a subshell `(cd X && <cmd>)` so cwd is restored.
 
 ## Java
 - Prefer Java 21 (LTS) unless the project explicitly requires another version.
