@@ -1,0 +1,70 @@
+#!/usr/bin/env bash
+#
+# fzt - copy matching files from the current directory into a temp folder,
+#       zip the folder, then delete the folder.
+#
+# Usage: fzt --name NAME[.zip] --include FILE [FILE ...]
+#
+# Example:
+#   fzt --name boyer-csc505-m4-critical-thinking.zip --include *.py *.mp4 *.pdf *.png
+#
+# The shell expands the globs against the current directory, so --include
+# receives the actual matching files. fzt creates ./NAME/, copies those files
+# into it, zips it to ./NAME.zip, then removes ./NAME/ (also on error).
+# Patterns that match nothing are reported and skipped.
+# Assumes filenames contain no spaces.
+
+set -euo pipefail
+
+die() { echo "fzt: $*" >&2; exit 1; }
+usage() { grep -E '^#( |$)' "$0" | sed 's/^#\s\{0,1\}//'; exit "${1:-2}"; }
+
+name=""
+includes=()
+
+while [ $# -gt 0 ]; do
+    case "$1" in
+        --name)    [ $# -ge 2 ] || die "--name needs a value"; name="$2"; shift 2 ;;
+        --name=*)  name="${1#--name=}"; shift ;;
+        --include) shift; includes=("$@"); break ;;
+        -h|--help) usage 0 ;;
+        *)         die "unexpected argument '$1' (list files after --include)" ;;
+    esac
+done
+
+[ -n "$name" ] || die "missing --name"
+[ "${#includes[@]}" -gt 0 ] || die "missing --include files"
+
+folder="${name%.zip}"
+zip_path="${folder}.zip"
+[ -n "$folder" ] || die "empty --name"
+
+# fresh temp folder, removed on any exit
+[ -e "$folder" ] && rm -rf "$folder"
+mkdir "$folder"
+trap 'rm -rf "$folder"' EXIT
+
+count=0
+for f in "${includes[@]}"; do
+    [ "$f" = "$folder" ] && continue
+    [ "$f" = "$zip_path" ] && continue
+    if [ ! -e "$f" ]; then
+        echo "  skipped (no match): $f" >&2
+        continue
+    fi
+    dest="${folder}/$(basename "$f")"
+    [ -e "$dest" ] && continue          # already copied
+    cp -R "$f" "$dest"
+    echo "  + $f"
+    count=$((count + 1))
+done
+
+[ "$count" -gt 0 ] || die "no files matched, nothing to zip"
+
+# zip appends to an existing archive, so start clean
+[ -e "$zip_path" ] && { echo "overwriting existing $zip_path"; rm -f "$zip_path"; }
+zip -r -X "$zip_path" "$folder" -x "*/.DS_Store" >/dev/null
+
+echo
+echo "created $zip_path ($count files)"
+unzip -l "$zip_path"
