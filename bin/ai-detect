@@ -1,0 +1,60 @@
+#!/usr/bin/env bash
+#
+# ai-detect - run the ai-detector Claude Code skill against a file's contents.
+#
+# Usage: ai-detect FILE
+#        ai-detect -            # read text from stdin
+#
+# Example:
+#   ai-detect ~/Documents/essay.md
+#   pbpaste | ai-detect -
+#
+# Feeds the text to `claude -p` in headless mode and asks it to apply the
+# ai-detector skill, printing the structured likelihood assessment. Requires
+# the `claude` CLI on PATH and the ai-detector skill installed
+# (~/.claude/skills/ai-detector, via install.sh).
+
+set -euo pipefail
+
+die() { echo "ai-detect: $*" >&2; exit 1; }
+usage() { grep -E '^#( |$)' "$0" | sed 's/^#\s\{0,1\}//'; exit "${1:-2}"; }
+
+[ $# -eq 1 ] || usage 2
+case "$1" in
+    -h|--help) usage 0 ;;
+esac
+
+command -v claude >/dev/null 2>&1 || die "the 'claude' CLI is not on PATH"
+
+file="$1"
+if [ "$file" = "-" ]; then
+    text="$(cat)"
+    source_label="stdin"
+else
+    [ -f "$file" ] || die "no such file: $file"
+    # absolute path for the label
+    case "$file" in
+        /*) source_label="$file" ;;
+        *)  source_label="$PWD/$file" ;;
+    esac
+    text="$(cat "$file")"
+fi
+
+[ -n "${text//[[:space:]]/}" ] || die "no text to analyze (empty input)"
+
+# Slurp the heredoc into $prompt via `read` rather than $(cat <<EOF ...).
+# macOS ships bash 3.2, whose parser mis-handles a lone apostrophe inside a
+# heredoc nested in command substitution ("unexpected EOF"). read -d '' reads
+# to NUL (never found), capturing the whole body, and returns nonzero at EOF.
+IFS= read -r -d '' prompt <<EOF || true
+Use your ai-detector skill to assess whether the text below was AI-generated.
+Output only the skill's structured assessment (AI Likelihood, Provenance,
+Confidence, Evidence, Counter-evidence, Notes).
+Source: $source_label
+
+--- BEGIN TEXT ---
+$text
+--- END TEXT ---
+EOF
+
+exec claude -p "$prompt"
