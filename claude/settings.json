@@ -56,6 +56,20 @@
     ],
     "defaultMode": "default"
   },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write|Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/log-tool-use.sh",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  },
   "statusLine": {
     "type": "command",
     "command": "~/.claude/statusline-command.sh"
@@ -63,15 +77,6 @@
   "enabledPlugins": {
     "swift-lsp@claude-plugins-official": true
   },
-  "skipAutoPermissionPrompt": true,
-  "hooks": {
-    "PostToolUse": [
-      {
-        "matcher": "Edit|Write|Bash",
-        "hooks": [
-          { "type": "command", "command": "~/.claude/hooks/log-tool-use.sh", "timeout": 10 }
-        ]
-      }
-    ]
-  }
+  "tui": "fullscreen",
+  "skipAutoPermissionPrompt": true
 }
