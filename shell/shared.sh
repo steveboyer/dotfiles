@@ -18,12 +18,32 @@ esac
 # ----------------------------------------------------------------------------
 # PATH
 # ----------------------------------------------------------------------------
-# Prepend a directory to PATH only if it exists and isn't already on PATH.
+# Prepend a directory to PATH if it exists, moving it to the front even when
+# it's already somewhere on PATH.
+#
+# The move matters on macOS: /etc/zprofile runs /usr/libexec/path_helper, which
+# rebuilds an inherited PATH with /etc/paths (/usr/bin, /bin, ...) hoisted to
+# the front and everything else appended after. Any shell that inherits a
+# populated PATH (tmux, VS Code, `zsh -l`, ssh) therefore ends up with system
+# tools ahead of Homebrew. Skipping dirs that are "already on PATH" would leave
+# that ordering in place; re-prepending makes this file authoritative.
 prepend_path() {
-  case ":$PATH:" in
-    *":$1:"*) return 0 ;;
-  esac
-  [ -d "$1" ] && PATH="$1:$PATH"
+  [ -d "$1" ] || return 0
+
+  # Strip every existing occurrence. Written with case/${} rather than a
+  # `for dir in $PATH` loop because zsh doesn't word-split unquoted expansions.
+  _pp=":$PATH:"
+  while :; do
+    case "$_pp" in
+      *":$1:"*) _pp="${_pp%%":$1:"*}:${_pp#*":$1:"}" ;;
+      *) break ;;
+    esac
+  done
+  _pp="${_pp#:}"
+  _pp="${_pp%:}"
+
+  PATH="$1${_pp:+:$_pp}"
+  unset _pp
 }
 
 # Personal bin directories (highest priority)
